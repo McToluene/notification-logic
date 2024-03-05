@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.7'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.mctoluene'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+    maven {
+        url = uri('https://repo.spring.io/milestone')
+    }
+}
+
+ext {
+    set('springCloudVersion', "2021.0.5")
+}
+
+dependencies {
+    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    implementation 'org.springframework.cloud:spring-cloud-config-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'com.azure.spring:spring-cloud-azure-stream-binder-servicebus:4.5.0'
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.postgresql:r2dbc-postgresql'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
